@@ -12,7 +12,7 @@ layout: layouts/base.njk
   <p><em>{{ post.dato | datoNorsk }}</em></p>
 
   {% if post.bilde %}
-    <img src="{{ post.bilde }}" alt="Bilde til {{ post.title }}" style="max-width: 100%; height: auto; margin-bottom: 1rem;" />
+    {% image post.bilde, "Bilde til {{ post.title }}", "(max-width: 900px) 100vw, 900px" %}
   {% endif %}
 
   <p><strong>{{ post.ingress }}</strong></p>

@@ -1,4 +1,8 @@
 import MarkdownIt from "markdown-it";
+import Image from "@11ty/eleventy-img";
+import htmlmin from "html-minifier-terser";
+import fs from "node:fs";
+import path from "node:path";
 
 export default function(eleventyConfig) {
   const md = new MarkdownIt({
@@ -37,7 +41,83 @@ export default function(eleventyConfig) {
     }
   });
 
+  // Register responsive image shortcode
+  eleventyConfig.addNunjucksAsyncShortcode("image", async function(src, alt = "", sizes = "100vw", className = "") {
+    if (!src) {
+      return "";
+    }
+
+    const options = {
+      widths: [320, 640, 960, 1280, 1920],
+      formats: ["avif", "webp", "jpeg", "png"],
+      outputDir: "./dist/img/",
+      urlPath: "/img/"
+    };
+
+    let imageSrc = src;
+    try {
+      // Map "/static/..." web paths to filesystem source files
+      if (typeof src === "string" && src.startsWith("/static/")) {
+        const fileRelative = src.replace("/static/", "");
+        imageSrc = path.join(process.cwd(), "src", "static", fileRelative);
+      }
+
+      const metadata = await Image(imageSrc, options);
+      const attrs = {
+        alt,
+        sizes,
+        loading: "lazy",
+        decoding: "async",
+        class: className
+      };
+      return Image.generateHTML(metadata, attrs);
+    } catch (e) {
+      // Fallback to plain img if processing fails
+      const safeAlt = alt ? String(alt).replace(/"/g, "&quot;") : "";
+      return `<img src="${src}" alt="${safeAlt}" loading="lazy" decoding="async" ${className ? `class="${className}"` : ""}>`;
+    }
+  });
+
   eleventyConfig.addPassthroughCopy("src/static");
+
+  // Minify HTML output in production
+  eleventyConfig.addTransform("htmlmin", async (content, outputPath) => {
+    const isHtml = outputPath && outputPath.endsWith(".html");
+    const isProd = process.env.ELEVENTY_ENV === "production" || process.env.NODE_ENV === "production";
+    if (isHtml && isProd) {
+      return await htmlmin.minify(content, {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        minifyCSS: true,
+        minifyJS: true,
+        sortAttributes: true,
+        sortClassName: true
+      });
+    }
+    return content;
+  });
+
+  // After build, minify CSS that was passed through
+  eleventyConfig.on("afterBuild", async () => {
+    try {
+      const cssPath = path.join(process.cwd(), "dist", "static", "styles.css");
+      if (fs.existsSync(cssPath)) {
+        const { transform } = await import("lightningcss");
+        const input = fs.readFileSync(cssPath);
+        const { code } = transform({
+          filename: "styles.css",
+          code: input,
+          minify: true
+        });
+        fs.writeFileSync(cssPath, Buffer.from(code));
+      }
+    } catch (e) {
+      console.warn("CSS minify failed:", e?.message || e);
+    }
+  });
 
   return {
     dir: {

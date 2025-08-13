@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import EleventyFetch from '@11ty/eleventy-fetch';
 import { parse } from 'csv-parse/sync';
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/16eNrJbiGx3NLotCBqJNSlm3BsPLFr8ljU5uwKDCUeU0/gviz/tq?tqx=out:csv";
@@ -16,8 +16,7 @@ function makeSlug(text) {
 
 export default async function () {
   try {
-    const response = await fetch(SHEET_URL);
-    const csv = await response.text();
+    const csv = await EleventyFetch(SHEET_URL, { duration: '1h', type: 'text' });
     const records = parse(csv, {
       columns: true,
       skip_empty_lines: true
