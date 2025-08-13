@@ -26,11 +26,11 @@ title: Hjem
   <h2>Klubben er godkjent som:</h2>
   <div class="merker-grid">
     <div>
-      <img src="/static/kvalitetsklubb.png" alt="Kvalitetsklubb fra Norges Fotballforbund" />
+      {% image "./src/static/kvalitetsklubb.png", "Kvalitetsklubb fra Norges Fotballforbund", "(max-width: 600px) 50vw, 300px" %}
       <p>Kvalitetsklubb (NFF)</p>
     </div>
     <div>
-      <img src="/static/fairplay.png" alt="Fair Play" />
+      {% image "./src/static/fairplay.png", "Fair Play", "(max-width: 600px) 50vw, 300px" %}
       <p>Vi spiller etter Fair Play-prinsipper</p>
     </div>
   </div>
@@ -59,7 +59,7 @@ title: Hjem
     {% for post in nyheter %}
       <article>
         {% if post.bilde %}
-          <img src="{{ post.bilde }}" alt="Bilde til {{ post.title }}" />
+          {% image post.bilde, "Bilde til {{ post.title }}", "(max-width: 800px) 100vw, 800px" %}
         {% endif %}
         <h2><a href="/nytt/{{ post.slug }}/">{{ post.title }}</a></h2>
         <p><em>{{ post.dato | datoNorsk }}</em></p>
@@ -73,7 +73,7 @@ title: Hjem
 <section>
   <h2>Våre sponsorer</h2>
   <div class="sponsorar">
-    <img src="/static/sponsor1.png" alt="Sponsor 1" />
-    <img src="/static/sponsor2.png" alt="Sponsor 2" />
+    {% image "./src/static/sponsor1.png", "Sponsor 1", "(max-width: 600px) 45vw, 300px" %}
+    {% image "./src/static/sponsor2.png", "Sponsor 2", "(max-width: 600px) 45vw, 300px" %}
   </div>
 </section>

@@ -8,7 +8,7 @@ title: Nyheter
 {% for post in nyheter %}
   <article>
     {% if post.bilde %}
-      <img src="{{ post.bilde }}" alt="Bilde til {{ post.tittel }}" style="max-width: 100%; height: auto;" />
+      {% image post.bilde, "Bilde til {{ post.tittel }}", "(max-width: 800px) 100vw, 800px" %}
     {% endif %}
     <h2>{{ post.tittel }}</h2>
     <p><em>{{ post.dato | datoNorsk }}</em></p>
