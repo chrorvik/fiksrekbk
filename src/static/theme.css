@@ -1,0 +1,105 @@
+/* Design refresh overrides */
+
+:root {
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --shadow-1: 0 1px 2px var(--farge-skygge);
+  --shadow-2: 0 4px 12px var(--farge-skygge);
+}
+
+html { color-scheme: light dark; }
+
+/* Header refresh */
+header {
+  background: linear-gradient(135deg, var(--farge-hovud-mørk), var(--farge-hovud));
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+header h1 {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  line-height: 1.15;
+  font-size: clamp(1.5rem, 1.1rem + 2.5vw, 2.5rem);
+  text-shadow: 0 1px 1px rgba(0,0,0,.15);
+}
+
+/* Fluid logo */
+.frbk-logo { height: clamp(96px, 12vw, 140px); }
+
+/* Nav polish */
+nav a {
+  padding: 0.25rem 0.35rem;
+  border-radius: 6px;
+  transition: background-color .2s ease, color .2s ease, text-decoration-color .2s ease;
+}
+nav a:hover, nav a:focus-visible {
+  background: rgba(255,255,255,0.08);
+  text-decoration: none;
+}
+
+/* Main layout */
+main { max-width: 1040px; }
+
+/* Headings */
+main h1 { font-size: clamp(1.6rem, 1.2rem + 2.2vw, 2.25rem); }
+main h2 { font-size: clamp(1.15rem, 1rem + 1vw, 1.5rem); }
+
+/* Cards */
+article {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-1);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+article:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+}
+
+/* News grid */
+.nyheter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+  align-items: stretch;
+}
+.nyheter-grid article { display: flex; flex-direction: column; }
+
+/* Images */
+article img, .merker-grid img { border-radius: var(--radius-sm); }
+
+/* Buttons */
+a.knapp {
+  border-radius: 10px;
+  box-shadow: 0 2px 0 rgba(0,0,0,.05);
+}
+a.knapp:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.08); }
+
+/* Sponsor logos */
+.sponsorar img {
+  filter: grayscale(10%) contrast(1.05);
+  transition: filter .2s ease, transform .2s ease;
+}
+.sponsorar img:hover { filter: none; transform: scale(1.03); }
+
+/* Timeline polish */
+.timeline-container { border-left-width: 3px; }
+.timeline-content { border-radius: var(--radius-sm); }
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+  main { padding: 1.5rem 1rem; }
+}
+
+/* Focus styles */
+:where(a, button, [tabindex])::selection { background: rgba(97, 143, 240, .35); }
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--farge-link);
+  outline-offset: 2px;
+  border-radius: 8px;
+}

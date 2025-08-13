@@ -56,6 +56,7 @@ title: Hjem
 {% if innstillinger.visNyheter and nyheter.length > 0 %}
   <section>
     <h2>Nyheter</h2>
+    <div class="nyheter-grid">
     {% for post in nyheter %}
       <article>
         {% if post.bilde %}
@@ -67,6 +68,7 @@ title: Hjem
         <a href="/nytt/{{ post.slug }}/">Les mer</a>
       </article>
     {% endfor %}
+    </div>
   </section>
 {% endif %}
 

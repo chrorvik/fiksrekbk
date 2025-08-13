@@ -5,6 +5,7 @@ title: Nyheter
 
 <h1>Nyheter</h1>
 
+<div class="nyheter-grid">
 {% for post in nyheter %}
   <article>
     {% if post.bilde %}
@@ -16,3 +17,4 @@ title: Nyheter
     <a href="/nytt/{{ post.slug }}/">Les mer</a>
   </article>
 {% endfor %}
+</div>

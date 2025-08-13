@@ -100,19 +100,19 @@ export default function(eleventyConfig) {
     return content;
   });
 
-  // After build, minify CSS that was passed through
+  // After build, minify all CSS files passed through to dist/static
   eleventyConfig.on("afterBuild", async () => {
     try {
-      const cssPath = path.join(process.cwd(), "dist", "static", "styles.css");
-      if (fs.existsSync(cssPath)) {
-        const { transform } = await import("lightningcss");
-        const input = fs.readFileSync(cssPath);
-        const { code } = transform({
-          filename: "styles.css",
-          code: input,
-          minify: true
-        });
-        fs.writeFileSync(cssPath, Buffer.from(code));
+      const staticDir = path.join(process.cwd(), "dist", "static");
+      if (!fs.existsSync(staticDir)) return;
+      const { transform } = await import("lightningcss");
+      for (const entry of fs.readdirSync(staticDir)) {
+        if (entry.endsWith(".css")) {
+          const filePath = path.join(staticDir, entry);
+          const input = fs.readFileSync(filePath);
+          const { code } = transform({ filename: entry, code: input, minify: true });
+          fs.writeFileSync(filePath, Buffer.from(code));
+        }
       }
     } catch (e) {
       console.warn("CSS minify failed:", e?.message || e);
