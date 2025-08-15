@@ -12,7 +12,7 @@
   --farge-kort-kant: #e0e0e0;
   --farge-skygge: rgba(0, 0, 0, 0.04);
   --farge-footer: #f0f0f0;
-  --font: "Noto Sans", system-ui, sans-serif;
+  --font: "Inter", "Noto Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
 }
 
 /* ----------------------------------------
@@ -56,30 +56,27 @@ main a:focus {
 /* ----------------------------------------
    Header og nav
 ----------------------------------------- */
-header {
+header:not(.site-header) {
   background: var(--farge-hovud-mørk);
   color: var(--farge-hvit);
   padding: 1.5rem 1rem;
   text-align: center;
 }
-header h1 {
+header:not(.site-header) h1 {
   margin: 0;
   font-size: 2rem;
 }
-
-nav {
+nav:not(.primary-nav) {
   margin-top: 0.5rem;
 }
-
-nav a {
+nav:not(.primary-nav) a {
   color: var(--farge-hvit);
   margin: 0 0.5rem;
   text-decoration: none;
   font-weight: bold;
 }
-
-nav a:hover,
-nav a:focus {
+nav:not(.primary-nav) a:hover,
+nav:not(.primary-nav) a:focus {
   text-decoration: underline;
   color: var(--farge-hvit);
 }
@@ -629,5 +626,122 @@ body, header, section, article, footer {
   .hjornetrekant a {
     font-size: 0.7rem;
   }
+}
+
+/* ----------------------------------------
+   Moderne toppnavigasjon og hero
+----------------------------------------- */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.site-header {
+  background: var(--farge-kort);
+  color: var(--farge-tekst);
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--farge-kort-kant);
+}
+.site-header .header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.site-header .primary-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.site-header .primary-nav a {
+  color: var(--farge-tekst);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.35rem;
+}
+.site-header .primary-nav a:hover,
+.site-header .primary-nav a:focus {
+  background: var(--farge-kort-kant);
+  color: var(--farge-hovud);
+}
+.site-header .frbk-logo {
+  height: 64px;
+}
+.site-header .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.site-header .mobilmeny-knapp {
+  position: static;
+}
+.site-header .mobilmeny-knapp span {
+  background: var(--farge-tekst);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, var(--farge-hovud-mørk), var(--farge-hovud));
+  color: var(--farge-hvit);
+  padding: 4rem 0;
+  overflow: hidden;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 10%, rgba(255,255,255,0.08), transparent 40%),
+              radial-gradient(circle at 80% 30%, rgba(255,255,255,0.06), transparent 40%);
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+}
+.hero h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.2rem;
+}
+.hero p {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+}
+.hero-cta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Knapper (varianter) */
+.knapp-primary {
+  background: var(--farge-link);
+  color: var(--farge-hvit);
+  padding: 0.6rem 1rem;
+  border-radius: 0.6rem;
+  font-weight: 700;
+}
+.knapp-primary:hover,
+.knapp-primary:focus {
+  background: var(--farge-hovud);
+}
+.knapp-secondary {
+  background: transparent;
+  color: var(--farge-hvit);
+  border: 2px solid rgba(255,255,255,0.8);
+  padding: 0.55rem 1rem;
+  border-radius: 0.6rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.knapp-secondary:hover,
+.knapp-secondary:focus {
+  background: rgba(255,255,255,0.12);
+}
+
+@media (max-width: 768px) {
+  .site-header .frbk-logo { height: 52px; }
+  .hero { padding: 3rem 0; }
+  .hero h1 { font-size: 1.8rem; }
 }
 

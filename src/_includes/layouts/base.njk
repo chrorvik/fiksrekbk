@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/static/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans&display=swap" rel="stylesheet">
 <script>
   try {
     const saved = localStorage.getItem("theme");
@@ -20,17 +20,29 @@
 </script>
 </head>
 <body>
-  <header>
-    <a href="/">{% image "./src/static/frbk-logo.png", "FRBK logo", "(max-width: 480px) 120px, (max-width: 1024px) 180px, 220px", "frbk-logo" %}</a>
-    <div class="frbk-banner-tekst">
-      <h1>Fiksdal/Rekdal Ballklubb</h1>
-      <p>Fotballglede for alle sidan 1979</p>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">{% image "./src/static/frbk-logo.png", "FRBK logo", "(max-width: 480px) 120px, (max-width: 1024px) 180px, 220px", "frbk-logo" %}</a>
+      <nav class="primary-nav">
+        <a href="/">Hjem</a>
+        <a href="/nytt">Nyheter</a>
+        <a href="/om/">Om klubben</a>
+        <a href="/fairplay/">Fair Play</a>
+        <a href="/dokument/">Dokument</a>
+        <a href="/utmerkelser/">Utmerkelser</a>
+        <a href="/kontakt/">Kontakt</a>
+      </nav>
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Bytt fargetema">
+          <span class="icon" id="theme-icon">🌞</span>
+        </button>
+        <button id="mobilmeny-knapp" class="mobilmeny-knapp" aria-label="Meny">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
-    <button id="mobilmeny-knapp" class="mobilmeny-knapp" aria-label="Meny">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
     <div id="mobilmeny-overlay" class="mobilmeny-overlay skjult">
       <nav id="mobilmeny" class="mobilmeny">
         <a href="/">Hjem</a>
@@ -42,32 +54,31 @@
         <a href="/kontakt/">Kontakt</a>
       </nav>
     </div>
-
-    <nav>
-      <a href="/">Hjem</a>
-      <a href="/nytt">Nyheter</a>
-      <a href="/om/">Om klubben</a>
-      <a href="/fairplay/">Fair Play</a>
-      <a href="/dokument/">Dokument</a>
-      <a href="/utmerkelser/">Utmerkelser</a>
-      <a href="/kontakt/">Kontakt</a>
-    </nav>
-          <button id="theme-toggle" class="theme-toggle" aria-label="Bytt fargetema">
-        <span class="icon" id="theme-icon">🌞</span>
-      </button>
-
     <div class="hjornetrekant">
       <a href="https://medlemskap.nif.no/26179" target="_blank" rel="noopener noreferrer">
         Meld deg inn i <br> Fiksdal/Rekdal BK
       </a>
     </div>
     <div class="mobil-banner">
-  <a href="https://medlemskap.nif.no/26179" target="_blank" rel="noopener noreferrer">
-    📣 Bli medlem i Fiksdal/Rekdal BK!
-  </a>
-</div>
-
+      <a href="https://medlemskap.nif.no/26179" target="_blank" rel="noopener noreferrer">
+        📣 Bli medlem i Fiksdal/Rekdal BK!
+      </a>
+    </div>
   </header>
+
+  {% if page.url == "/" %}
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <h1>Fiksdal/Rekdal Ballklubb</h1>
+      <p>Fotballglede for alle sidan 1979 – aktivitet for barn og ungdom, i trygge og gode rammer.</p>
+      <div class="hero-cta">
+        <a class="knapp knapp-primary" href="https://medlemskap.nif.no/26179" target="_blank" rel="noopener noreferrer">Bli medlem</a>
+        <a class="knapp knapp-secondary" href="/nytt">Se nyheter</a>
+      </div>
+    </div>
+  </section>
+  {% endif %}
 
   <main>
     {{ content | safe }}
